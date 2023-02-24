@@ -5,7 +5,7 @@
 package BLL;
 
 import DAO.PersonDAO;
-import DTO.Person;
+import Entity.Person;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

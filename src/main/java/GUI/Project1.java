@@ -20,16 +20,14 @@ public class Project1 {
         int choice = -1;
         do {
             System.out.println("================Quản lý khóa học==================");
-            System.out.println("=1:Quản lý học viên/giảng viên                   =");
-            System.out.println("=2:Quản lý khóa học");
-            System.out.println("=3:Quản lý phân công");
-            System.out.println("=4:Quản lý kết quả");
+            System.out.println("=1:Quản lý khóa học");
+            System.out.println("=2:Quản lý phân công");
+            System.out.println("=3:Quản lý kết quả");
             System.out.println("=0:Thoát=");
             System.out.println("==================================================");
             choice = sc.nextInt();
             switch (choice) {
                 case 1 -> {
-                    personGUI.showScreen();
                 }
                 case 2 -> {
                     

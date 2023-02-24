@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import DTO.Person;
+import Entity.Person;
 import courseEnum.PersonEnum;
 import java.sql.ResultSet;
 import java.sql.SQLException;

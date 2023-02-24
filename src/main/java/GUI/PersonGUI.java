@@ -5,7 +5,7 @@
 package GUI;
 
 import BLL.PersonBLL;
-import DTO.Person;
+import Entity.Person;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
