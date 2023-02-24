@@ -18,8 +18,8 @@ import java.util.logging.Logger;
  */
 public class DBConnection {
 
-    private Connection conn;
-    private PreparedStatement stmt;
+    protected Connection conn;
+    protected PreparedStatement stmt;
     private String host, port, dbName, dbUser, dbPassword;
 
     public DBConnection() {
