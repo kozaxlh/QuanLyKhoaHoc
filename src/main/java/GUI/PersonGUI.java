@@ -42,7 +42,7 @@ public class PersonGUI {
                     sc.nextLine();
                 }
                 case 2 -> {
-                    ArrayList<Person> instructors = bll.getInstructor();
+                    ArrayList<Person> instructors = bll.getInstructors();
                     for (Person item : instructors) {
                         System.out.println(item.getName() + "    " + item.getHireDate());
                     }

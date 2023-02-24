@@ -20,7 +20,11 @@ public class PersonBLL {
         return dao.getStudents();
     }
     
-    public ArrayList<Person> getInstructor() throws SQLException {
-        return dao.getInstructor();
+    public ArrayList<Person> getInstructors() throws SQLException {
+        return dao.getInstructors();
+    }
+    
+    public Person getInstructor(int id) throws SQLException {
+        return dao.getInstructor(id);
     }
 }
