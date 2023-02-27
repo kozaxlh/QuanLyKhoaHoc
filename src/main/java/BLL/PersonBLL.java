@@ -14,17 +14,22 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class PersonBLL {
-    private PersonDAO dao = new PersonDAO();
+    private PersonDAO personDAO = new PersonDAO();
+
     
     public ArrayList<Person> getStudents() throws SQLException {
-        return dao.getStudents();
+        return personDAO.getStudents();
+    }
+    
+    public ArrayList<Person> getStudentsInCourse(int id) throws SQLException {
+        return personDAO.getStudentsInCourse(id);
     }
     
     public ArrayList<Person> getInstructors() throws SQLException {
-        return dao.getInstructors();
+        return personDAO.getInstructors();
     }
     
     public Person getInstructor(int id) throws SQLException {
-        return dao.getInstructor(id);
+        return personDAO.getInstructor(id);
     }
 }
