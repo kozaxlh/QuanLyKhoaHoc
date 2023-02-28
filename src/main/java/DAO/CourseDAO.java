@@ -37,5 +37,37 @@ public class CourseDAO extends DBConnection {
         }
         return courseList;
     }
-
+    public boolean updateCourse(Course dto) {
+        boolean flag;
+        String updateSQL = "update Course " +
+                           "set Title = ?, " +
+                               "Credits = ?, " +
+                               "DepartmentID = ? " +
+                           "where CourseID = ?";
+        try {
+            stmt = conn.prepareStatement(updateSQL);
+            stmt.setString(1,((Course) dto).getTitle());
+            stmt.setInt(2,((Course) dto).getCredits());
+            stmt.setInt(3,((Course) dto).getDepartmentId());
+            stmt.setInt(4,((Course) dto).getCourseID());
+            flag = stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+        return flag;
+    }
+    public boolean deleteCourse(Course dto) {
+        boolean flag;
+        String deleteSQL = "delete Course " +
+                           "where CourseID = ?";
+        try {
+            stmt = conn.prepareStatement(deleteSQL);
+            stmt.setInt(1,((Course) dto).getCourseID());
+            flag = stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return flag;
+    }
 }
