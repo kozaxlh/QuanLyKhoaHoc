@@ -19,4 +19,10 @@ public class CourseBLL {
     public ArrayList<Course> getCourseList() throws SQLException {
         return courseDAO.getCourseList();
     }
+    public boolean updateCourse(Course course){
+        return courseDAO.updateCourse(course);
+    }
+    public boolean deleteCourse(Course course){
+        return courseDAO.deleteCourse(course);
+    }
 }
