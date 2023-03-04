@@ -8,18 +8,18 @@ package Entity;
  *
  * @author asus
  */
-public class StudentGrade {
+public class StudentGrace {
     protected int EnrollmentID;
     protected int CourseID;
     protected int StudentID;
-    protected float Grade;
+    protected float Grace;
     
     
-    public StudentGrade(int EnrollmentID, int CourseID, int StudentID, float Grade){
+    public StudentGrace(int EnrollmentID, int CourseID, int StudentID, float Grace){
         this.EnrollmentID = EnrollmentID;
         this.CourseID = CourseID;
         this.StudentID = StudentID;
-        this.Grade = Grade;
+        this.Grace = Grace;
     }
     public int getEnrollmentID() {
         return EnrollmentID;
@@ -42,11 +42,11 @@ public class StudentGrade {
     public void setStudentID(int StudentID) {
         this.StudentID = StudentID;
     }
-    public float getGrade() {
-        return Grade;
+    public float getGrace() {
+        return Grace;
     }
 
-    public void setGrade(int Grade) {
-        this.Grade = Grade;
+    public void setGrace(int Grace) {
+        this.Grace = Grace;
     }
 }
