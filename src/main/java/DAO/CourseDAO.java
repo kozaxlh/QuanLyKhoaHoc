@@ -108,10 +108,10 @@ public class CourseDAO extends DBConnection {
             stmt.setInt(4, ((Course) dto).getDepartmentId());
 
             stmt.execute();
-
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

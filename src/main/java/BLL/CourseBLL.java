@@ -31,4 +31,5 @@ public class CourseBLL {
     public ArrayList<Course> getCourse(int id) throws SQLException {
         return courseDAO.getCourse(id);
     }
+
 }
