@@ -25,4 +25,11 @@ public class CourseBLL {
     public boolean deleteCourse(Course course){
         return courseDAO.deleteCourse(course);
     }
+    public void addCrouse(Course course) {
+        courseDAO.addCourse(course);
+    }
+    public ArrayList<Course> getCourse(int id) throws SQLException {
+        return courseDAO.getCourse(id);
+    }
+
 }
