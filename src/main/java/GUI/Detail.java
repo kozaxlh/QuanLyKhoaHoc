@@ -20,7 +20,7 @@ public class Detail {
         do {
             System.out.println("============Xem chi tiet=============");
             System.out.println("1:Ten hoc vien                              ");
-            System.out.println("2:Khoa hoc cua hoc  vien                     ");
+            System.out.println("2:Khoa hoc cua hoc vien                     ");
             System.out.println("3:So diem hoc vien                           ");
             System.out.println("0:Thoát                                      ");
             choice = sc.nextInt();

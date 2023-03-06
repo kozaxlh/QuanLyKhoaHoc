@@ -20,6 +20,10 @@ public class Course {
         this.Credits = Credits;
         this.DepartmentId = DepartmentId;
     }
+
+    public Course() {
+    }
+    
     public int getCourseID() {
         return CourseID;
     }
@@ -51,4 +55,10 @@ public class Course {
     public void setDepartmentId(int DepartmentId) {
         this.DepartmentId = DepartmentId;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" + "CourseID=" + CourseID + ", Title=" + Title + ", Credits=" + Credits + ", DepartmentId=" + DepartmentId + '}';
+    }
+    
 }

@@ -62,7 +62,7 @@ public class CourseDAO extends DBConnection {
 
     public boolean deleteCourse(Course dto) {
         boolean flag;
-        String deleteSQL = "delete Course "
+        String deleteSQL = "delete from Course "
                 + "where CourseID = ?";
         try {
             stmt = conn.prepareStatement(deleteSQL);
@@ -99,13 +99,14 @@ public class CourseDAO extends DBConnection {
     }
 
     public void addCourse(Course dto) {
+        String sql = "INSERT INTO Course (Title, Credits, DepartmentId) "
+                + "VALUES(?, ?, ?)";
 
         try {
-            stmt = conn.prepareStatement("INSERT INTO Course(CourseID,Title,Credits,DeparmentId)");
-            stmt.setInt(1, ((Course) dto).getCourseID());
-            stmt.setString(2, ((Course) dto).getTitle());
-            stmt.setInt(3, ((Course) dto).getCredits());
-            stmt.setInt(4, ((Course) dto).getDepartmentId());
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, ((Course) dto).getTitle());
+            stmt.setInt(2, ((Course) dto).getCredits());
+            stmt.setInt(3, ((Course) dto).getDepartmentId());
 
             stmt.execute();
         }

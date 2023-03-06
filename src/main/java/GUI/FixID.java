@@ -19,7 +19,7 @@ public class FixID {
 
         do {
             System.out.println("============Sua thong tin co ban=============");
-            System.out.println("1:Ten khoa                                   ");
+            System.out.println("1:Ma khoa                                   ");
             System.out.println("2:Ten khoa hoc cua hoc vien                  ");
             System.out.println("3:So tien                                    ");
             System.out.println("0:Thoát                                      ");
