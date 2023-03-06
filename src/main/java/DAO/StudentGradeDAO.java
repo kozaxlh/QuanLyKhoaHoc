@@ -103,7 +103,7 @@ public class StudentGradeDAO extends DBConnection {
     }
     
     public boolean deleteStudentGrade(StudentGrade grade) throws SQLException {
-        String sql = "DELETE StudentGrade "
+        String sql = "DELETE FROM StudentGrade "
                 + "WHERE EnrollmentID = ?";
 
         stmt = conn.prepareStatement(sql);
