@@ -78,7 +78,7 @@ public class CourseDAO extends DBConnection {
     public ArrayList<Course> getCourse(int id) throws SQLException {
         ArrayList<Course> CourseList = new ArrayList<>();
 
-        String sql = "SELECT * FROM Person WHERE id = ? ";
+        String sql = "SELECT * FROM Course WHERE CourseID = ? ";
 
         stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);

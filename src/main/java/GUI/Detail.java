@@ -4,7 +4,17 @@
  */
 package GUI;
 
+import BLL.CourseBLL;
+import BLL.PersonBLL;
+import BLL.StudentGradeBLL;
+import Entity.Course;
+import Entity.Person;
+import Entity.StudentGrade;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,29 +22,94 @@ import java.util.Scanner;
  */
 public class Detail {
 
-    public void showScreen() {
-        Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 
-        int choice = -1;
+    CourseBLL courseBLL = new CourseBLL();
+    PersonBLL personBLL = new PersonBLL();
+    StudentGradeBLL gradeBLL = new StudentGradeBLL();
 
-        do {
-            System.out.println("============Xem chi tiet=============");
-            System.out.println("1:Ten hoc vien                              ");
-            System.out.println("2:Khoa hoc cua hoc vien                     ");
-            System.out.println("3:So diem hoc vien                           ");
-            System.out.println("0:Thoát                                      ");
-            choice = sc.nextInt();
-            switch (choice) {
-                case 1 -> {
+    public void showScreen(int id) {
+//        int choice = -1;
+//
+//        do {
+//            System.out.println("============Xem chi tiet=============");
+//            System.out.println("1:Ten hoc vien                              ");
+//            System.out.println("2:Khoa hoc cua hoc vien                     ");
+//            System.out.println("3:So diem hoc vien                           ");
+//            System.out.println("0:Thoát                                      ");
+//            choice = sc.nextInt();
+//            switch (choice) {
+//                case 1 -> {
+//
+//                }
+//
+//                case 2 -> {
+//
+//                }
+//                case 0 -> {
+//                }
+//            }
+//        } while (choice != 0);
+        System.out.println(showCourseHeader(id));
+        showList(id);
+        System.out.println("Nhan 0 de tro ve");
+        sc.nextLine();
+    }
 
-                }
+    private String showCourseHeader(int courseID) throws IllegalArgumentException {
+        Course course = null;
+        ArrayList<Person> instructorList = null;
 
-                case 2 -> {
+        try {
+            course = courseBLL.getCourse(courseID).get(0);
+            instructorList = personBLL.getInstructorsByCourse(courseID);
+        }
+        catch (SQLException ex) {
+            System.out.println("Khong lay duoc du lieu");
+            return null;
+        }
 
-                }
-                case 0 -> {
+        String result = null;
+
+        result += "Ma khoa hoc:    " + course.getCourseID() + "\n";
+        result += "Ten khoa hoc:   " + course.getTitle() + "\n";
+        result += "So tin chi:     " + course.getCredits() + "\n";
+        result += "Ma khoa day:    " + course.getDepartmentId() + "\n";
+        result += "Ten giang vien: ";
+
+        if (instructorList != null) {
+            for (Person item : instructorList) {
+                result += item.getName() + " ";
+            }
+        }
+
+        return result;
+    }
+
+    private void showList(int courseID) {
+        ArrayList<StudentGrade> gradeList = null;
+        ArrayList<Person> studentList = null;
+
+        try {
+            gradeList = gradeBLL.getStudentInCourse(courseID);
+            studentList = personBLL.getStudentsInCourse(courseID);
+
+        }
+        catch (SQLException ex) {
+            System.out.println("Khong lay duoc du lieu");
+            System.out.println(ex);
+            return;
+        }
+        System.out.println("============Danh sach diem hoc vien===================");
+        System.out.println("Ma hoc vien    |Ten hoc vien      | Diem thi   ");
+
+        for (Person student : studentList) {
+            for (StudentGrade grade : gradeList) {
+                if (student.getId() == grade.getStudentID()) {
+                    System.out.println(String.format("%-15s %-20s %s", student.getId(), student.getName(), grade.getGrade()));
                 }
             }
-        } while (choice != 0);
+        }
+        
     }
 }

@@ -25,11 +25,14 @@ public class CourseBLL {
     public boolean deleteCourse(Course course){
         return courseDAO.deleteCourse(course);
     }
-    public void addCrouse(Course course) {
+    public void addCourse(Course course) {
         courseDAO.addCourse(course);
     }
-    public ArrayList<Course> getCourse(int id) throws SQLException {
-        return courseDAO.getCourse(id);
+    public ArrayList<Course> getCourse(int id) throws SQLException, IllegalArgumentException {
+        ArrayList<Course> list = courseDAO.getCourse(id);
+        if (list.isEmpty())
+            throw new IllegalArgumentException("Không suất hiện mã");
+        return list;
     }
 
 }
