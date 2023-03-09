@@ -34,7 +34,6 @@ public class DBConnection {
         String dbPath = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "?useUnicode=yes&characterEncoding=UTF-8";
         try {
             conn = (Connection) DriverManager.getConnection(dbPath, dbUser, dbPassword);
-            System.out.print("Connected");
         }
         catch (SQLException ex) {
             System.out.print(ex.getMessage());

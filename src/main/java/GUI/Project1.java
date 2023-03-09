@@ -9,7 +9,6 @@ import Entity.Course;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,12 +24,18 @@ public class Project1 {
         PersonGUI personGUI = new PersonGUI();
 
         int choice = -1;
-        System.out.println("");
+
         do {
-            showList();
+            try {
+                showList(courseBLL.getCourseList());
+            }
+            catch (SQLException ex) {
+                System.out.println("Không thể lấy dữ liệu");
+            }
+
             System.out.println("================Quan ly khoa hoc==================");
             System.out.println("=1:Them khoa hoc");
-            System.out.println("=2:Sua thong tin");
+            System.out.println("=2:Sua thong tin khoa hoc");
             System.out.println("=3:Xoa khoa");
             System.out.println("=4:Tim kiem");
             System.out.println("=5:Xem chi tiet");
@@ -43,16 +48,26 @@ public class Project1 {
                     addCourseScreen();
                 }
                 case 2 -> {
+                    FixID screen = new FixID();
+                    int id;
+                    System.out.println("Nhap ma khoa hoc can sua");
+                    id = sc.nextInt();
 
+                    screen.showScreen(id);
                 }
                 case 3 -> {
                     deleteCourseScreen();
                 }
                 case 4 -> {
-
+                    searchCourseScreen();
                 }
                 case 5 -> {
+                    Detail screen = new Detail();
+                    int id;
+                    System.out.println("Chon khoa hoc bang ma");
+                    id = sc.nextInt();
 
+                    screen.showScreen(id);
                 }
                 case 6 -> {
 
@@ -63,18 +78,12 @@ public class Project1 {
         } while (choice != 0);
     }
 
-    private static void showList() {
+    private static void showList(ArrayList<Course> courseList) {
         System.out.println("Ma khoa hoc|Ten khoa        | So tin chi  | Ma Khoa  ");
-        
-        try {
-            ArrayList<Course> courseList = courseBLL.getCourseList();
-            for (Course item : courseList) {
-                System.out.println(String.format("%-11s %-20s %-10s %s",
-                        item.getCourseID(), item.getTitle(), item.getCredits(), item.getDepartmentId()));
-            }
-        }
-        catch (SQLException e) {
-            System.out.println("Khong the them khoa hoc");
+
+        for (Course item : courseList) {
+            System.out.println(String.format("%-11s %-20s %-10s %s",
+                    item.getCourseID(), item.getTitle(), item.getCredits(), item.getDepartmentId()));
         }
     }
 
@@ -93,7 +102,7 @@ public class Project1 {
             System.out.print("Nhap ma khoa: ");
             course.setDepartmentId(sc.nextInt());
 
-            courseBLL.addCrouse(course);
+            courseBLL.addCourse(course);
 
             System.out.println("Nhap 1 de them khoa moi hoac nhap 0 de thoat ra ");
             choice = sc.nextInt();
@@ -119,6 +128,22 @@ public class Project1 {
                 System.out.println("Xoa that bai");
             }
         }
+    }
 
+    private static void searchCourseScreen() {
+        int courseID, choice;
+
+        System.out.println("Nhap ma/ten khoa hoc can tim: ");
+        courseID = sc.nextInt();
+
+        try {
+            showList(courseBLL.getCourse(courseID));
+        }
+        catch (SQLException ex) {
+            System.out.println("Khong the lay du lieu");
+            System.out.println(ex);
+        }
+        System.out.println("Nhan 1 de ve man hinh chinh");
+        sc.next();
     }
 }

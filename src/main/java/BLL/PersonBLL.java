@@ -29,6 +29,10 @@ public class PersonBLL {
         return personDAO.getInstructors();
     }
     
+    public ArrayList<Person> getInstructorsByCourse(int id) throws SQLException {
+        return personDAO.getInstructorsByCourse(id);
+    }
+    
     public Person getInstructor(int id) throws SQLException {
         return personDAO.getInstructor(id);
     }

@@ -43,7 +43,7 @@ public class PersonDAO extends DBConnection {
         ArrayList<Person> studentList = new ArrayList<Person>();
         
         String sql = "SELECT * FROM Person "
-                + "JOIN StudentGrace ON Person.PersonID = StudentGrace.StudentID "
+                + "JOIN StudentGrade ON Person.PersonID = StudentGrade.StudentID "
                 + "WHERE EnrollmentDate > 0 AND CourseID = ?";
         
         stmt = conn.prepareStatement(sql);
@@ -68,6 +68,28 @@ public class PersonDAO extends DBConnection {
         
         String sql = "SELECT * FROM Person WHERE HireDate > 0";
         ResultSet rs = this.doReadQuery(sql);
+        while(rs.next()) {
+            Person instructor = new Person(
+                    rs.getInt("PersonId"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getDate("HireDate"),
+                    PersonEnum.INSTRUCTOR
+                );
+            instructorList.add(instructor);
+        }
+        return instructorList;
+    }
+    
+    public ArrayList<Person> getInstructorsByCourse(int id) throws SQLException {
+        ArrayList<Person> instructorList = new ArrayList<Person>();
+        
+        String sql = "SELECT * FROM Person JOIN CourseInstructor ON Person.PersonID = CourseInstructor.PersonID "
+                + "WHERE HireDate > 0 AND CourseInstructor.CourseID = ?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        
+        ResultSet rs = stmt.executeQuery();
         while(rs.next()) {
             Person instructor = new Person(
                     rs.getInt("PersonId"),
