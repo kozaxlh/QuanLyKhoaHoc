@@ -81,6 +81,28 @@ public class PersonDAO extends DBConnection {
         return instructorList;
     }
     
+    public ArrayList<Person> getInstructorsByCourseID(int id) throws SQLException {
+        ArrayList<Person> instructorList = new ArrayList<Person>();
+        
+        String sql = "SELECT * FROM Person JOIN CourseInstructor ON Person.PersonID = CourseInstructor.PersonID"
+                + "WHERE HireDate > 0 AND CourseInstructor.CourseID = ?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        
+        ResultSet rs = stmt.executeQuery();
+        while(rs.next()) {
+            Person instructor = new Person(
+                    rs.getInt("PersonId"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getDate("HireDate"),
+                    PersonEnum.INSTRUCTOR
+                );
+            instructorList.add(instructor);
+        }
+        return instructorList;
+    }
+    
     public Person getInstructor(int id) throws SQLException {
         String sql = "SELECT * FROM Person WHERE HireDate > 0 AND id = ?";
         stmt = conn.prepareStatement(sql);
