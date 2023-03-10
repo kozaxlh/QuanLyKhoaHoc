@@ -25,9 +25,9 @@ public class StudentGradeBLL {
         return studentGradeDAO.getStudentGradeInCourse(id);
     }
 
-    public boolean addStudentGrade(StudentGrade grade) throws SQLException {
+    public boolean addStudentGradeInCourse(StudentGrade grade) throws SQLException {
         checkStudentGradeValid(grade);
-        return studentGradeDAO.addStudentGrade(grade);
+        return studentGradeDAO.addStudentGradeInCourse(grade);
     }
 
     public boolean addStudentGradeInCourse(ArrayList<StudentGrade> gradeList) throws SQLException {
