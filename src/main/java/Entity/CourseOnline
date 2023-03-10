@@ -1,0 +1,83 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Entity;
+
+import courseEnum.PersonEnum;
+import java.sql.Date;
+
+/**
+ *
+ * @author asus
+ */
+public class CourseOnline {
+    protected int CourseID;
+    protected String Title;
+    protected int Credits;
+    protected int DepartmentId;
+    protected String DepartmentName;
+    protected String URL;
+
+    
+   public CourseOnline(int CourseID, String Title, int Credits, int DepartmentId, String DepartmentName,String URL){
+        this.CourseID = CourseID;
+        this.Title = Title;
+        this.Credits = Credits;
+        this.DepartmentId = DepartmentId;
+        this.DepartmentName = DepartmentName;
+        this.URL = URL;
+        
+    }
+
+    public int getCourseID() {
+        return CourseID;
+    }
+
+    public void setCourseID(int CourseID) {
+        this.CourseID = CourseID;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String Title) {
+        this.Title = Title;
+    }
+
+    public int getCredits() {
+        return Credits;
+    }
+
+    public void setCredits(int Credits) {
+        this.Credits = Credits;
+    }
+
+    public int getDepartmentId() {
+        return DepartmentId;
+    }
+
+    public void setDepartmentId(int DepartmentId) {
+        this.DepartmentId = DepartmentId;
+    }
+
+    public String getDepartmentName() {
+        return DepartmentName;
+    }
+
+    public void setDepartmentName(String DepartmentName) {
+        this.DepartmentName = DepartmentName;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+
+    
+}
