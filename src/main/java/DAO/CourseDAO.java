@@ -5,6 +5,8 @@
 package DAO;
 
 import Entity.Course;
+import Entity.OnlineCourse;
+import Entity.OnsiteCourse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -115,19 +117,19 @@ public class CourseDAO extends DBConnection {
         }
 
     }
-    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        public ArrayList<CourseOnline> getCourseListOnline() throws SQLException {
-        ArrayList<CourseOnline> courseListOnline = new ArrayList<CourseOnline>();
 
-        String sql = "SELECT * FROM Course";
+    public ArrayList<OnlineCourse> getCourseListOnline() throws SQLException {
+        ArrayList<OnlineCourse> courseListOnline = new ArrayList<>();
+
+        String sql = "SELECT * FROM Course JOIN OnlineCourse "
+                + "ON Course.CourseID = OnlineCourse.CourseID";
         ResultSet rs = this.doReadQuery(sql);
         while (rs.next()) {
-            CourseOnline item = new CourseOnline(
+            OnlineCourse item = new OnlineCourse(
                     rs.getInt("CourseID"),
                     rs.getString("Title"),
                     rs.getInt("Credits"),
                     rs.getInt("DepartmentID"),
-                    rs.getString("DeparmentName"),
                     rs.getString("URL")
             );
 
@@ -135,18 +137,19 @@ public class CourseDAO extends DBConnection {
         }
         return courseListOnline;
     }
-    public ArrayList<CourseOnsite> getCourseListOnsite() throws SQLException {
-        ArrayList<CourseOnsite> courseListOnsite = new ArrayList<CourseOnsite>();
 
-        String sql = "SELECT * FROM Course";
+    public ArrayList<OnsiteCourse> getCourseListOnsite() throws SQLException {
+        ArrayList<OnsiteCourse> courseListOnsite = new ArrayList<>();
+
+        String sql = "SELECT * FROM Course JOIN OnsiteCourse "
+                + "ON Course.CourseID = OnsiteCourse.CourseID";
         ResultSet rs = this.doReadQuery(sql);
         while (rs.next()) {
-            CourseOnline item = new CourseOnline(
+            OnsiteCourse item = new OnsiteCourse(
                     rs.getInt("CourseID"),
                     rs.getString("Title"),
                     rs.getInt("Credits"),
                     rs.getInt("DepartmentID"),
-                    rs.getString("DeparmentName"),
                     rs.getString("Location"),
                     rs.getString("days"),
                     rs.getDate("time")
@@ -157,25 +160,18 @@ public class CourseDAO extends DBConnection {
         return courseListOnsite;
     }
 
-    public boolean updateCourseOnline(CourseOnline dto) {
+    public boolean updateCourseOnline(OnlineCourse dto) {
         boolean flag;
-        String updateSQL = "update Course "
-                + "set Title = ?, "
-                + "Credits = ?, "
-                + "DepartmentID = ? "
-                + "DepartmentName = ? "
+        String updateSQL = "update OnlineCourse "
                 + "URL = ? "
                 + "where CourseID = ?";
-        
+
         try {
+            boolean updateFlag = updateCourse(dto);
             stmt = conn.prepareStatement(updateSQL);
-            stmt.setString(1, ((CourseOnline) dto).getTitle());
-            stmt.setInt(2, ((CourseOnline) dto).getCredits());
-            stmt.setInt(3, ((CourseOnline) dto).getDepartmentId());
-            stmt.setString(4, ((CourseOnline) dto).getDeparmentName());
-            stmt.setString(5, ((CourseOnline) dto).getURL());
-            stmt.setInt(6, ((CourseOnline) dto).getCourseID());
-            flag = stmt.execute();
+            stmt.setString(1, ((OnlineCourse) dto).getURL());
+            stmt.setInt(2, ((OnlineCourse) dto).getCourseID());
+            flag = stmt.execute() && updateFlag;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -183,29 +179,23 @@ public class CourseDAO extends DBConnection {
 
         return flag;
     }
-    public boolean updateCourseOnsite(CourseOnsite dto) {
+
+    public boolean updateCourseOnsite(OnsiteCourse dto) {
         boolean flag;
-        String updateSQL = "update Course "
-                + "set Title = ?, "
-                + "Credits = ?, "
-                + "DepartmentID = ? "
-                + "DepartmentName = ? "
+        String updateSQL = "update OnsiteCourse "
                 + "Location = ? "
                 + "Days = ? "
                 + "time = ? "
                 + "where CourseID = ?";
-        
+
         try {
             stmt = conn.prepareStatement(updateSQL);
-            stmt.setString(1, ((CourseOnline) dto).getTitle());
-            stmt.setInt(2, ((CourseOnline) dto).getCredits());
-            stmt.setInt(3, ((CourseOnline) dto).getDepartmentId());
-            stmt.setInt(4, ((CourseOnline) dto).getDeparmentName());
-            stmt.setString(5, ((CourseOnline) dto).getLocation());
-            stmt.setString(6, ((CourseOnline) dto).getDays());
-            stmt.setDate(7, ((CourseOnline) dto).gettime());
-            stmt.setInt(8, ((CourseOnline) dto).getCourseID());
-            flag = stmt.execute();
+            boolean updateFlag = updateCourse(dto);
+            stmt.setString(1, ((OnsiteCourse) dto).getLocation());
+            stmt.setString(2, ((OnsiteCourse) dto).getDays());
+            stmt.setDate(3, ((OnsiteCourse) dto).getTime());
+            stmt.setInt(4, ((OnsiteCourse) dto).getCourseID());
+            flag = stmt.execute() && updateFlag;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -214,28 +204,28 @@ public class CourseDAO extends DBConnection {
         return flag;
     }
 
-    public boolean deleteCourseOnline(CourseOnline dto) {
+    public boolean deleteCourseOnline(OnlineCourse dto) {
         boolean flag;
         String deleteSQL = "delete from CourseOnline "
                 + "where CourseID = ?";
         try {
             stmt = conn.prepareStatement(deleteSQL);
-            stmt.setInt(1, ((CourseOnline) dto).getCourseID());
-            flag = stmt.execute();
+            stmt.setInt(1, ((OnlineCourse) dto).getCourseID());
+            flag = stmt.execute() && deleteCourse(dto);
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return flag;
     }
-    
-    public boolean deleteCourseOnsite(CourseOnsite dto) {
+
+    public boolean deleteCourseOnsite(OnsiteCourse dto) {
         boolean flag;
         String deleteSQL = "delete from CourseOnsite "
                 + "where CourseID = ?";
         try {
             stmt = conn.prepareStatement(deleteSQL);
-            stmt.setInt(1, ((CourseOnsite) dto).getCourseID());
+            stmt.setInt(1, ((OnsiteCourse) dto).getCourseID());
             flag = stmt.execute();
         }
         catch (SQLException e) {
@@ -244,23 +234,24 @@ public class CourseDAO extends DBConnection {
         return flag;
     }
 
-    public ArrayList<CourseOnline> getCourseOnline(int id) throws SQLException {
-        ArrayList<CourseOnline> CourseListOnline = new ArrayList<>();
+    public ArrayList<OnlineCourse> getCourseOnline(int id) throws SQLException {
+        ArrayList<OnlineCourse> CourseListOnline = new ArrayList<>();
 
-        String sql = "SELECT * FROM CourseOnline WHERE CourseID = ? ";
+        String sql = "SELECT * FROM Course JOIN OnlineCourse "
+                + "ON Course.CourseID = OnlineCourse.CourseID "
+                + "WHERE CourseID = ?";
 
         stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            CourseOnline course;
-            course = new CourseOnline(
+            OnlineCourse course;
+            course = new OnlineCourse(
                     rs.getInt("CourseID"),
                     rs.getString("Title"),
                     rs.getInt("Credits"),
                     rs.getInt("DepartmentId"),
-                    rs.getString("DeparmentName"),
                     rs.getString("URL")
             );
             CourseListOnline.add(course);
@@ -269,23 +260,24 @@ public class CourseDAO extends DBConnection {
 
     }
 
-    public ArrayList<CourseOnsite> getCourseOnsite(int id) throws SQLException {
-        ArrayList<CourseOnsite> CourseListOnsite = new ArrayList<>();
+    public ArrayList<OnsiteCourse> getCourseOnsite(int id) throws SQLException {
+        ArrayList<OnsiteCourse> CourseListOnsite = new ArrayList<>();
 
-        String sql = "SELECT * FROM CourseOnsite WHERE CourseID = ? ";
+        String sql = "SELECT * FROM Course JOIN OnsiteCourse "
+                + "ON Course.CourseID = OnsiteCourse.CourseID "
+                + "WHERE CourseID = ?";
 
         stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            CourseOnline course;
-            course = new CourseOnline(
+            OnsiteCourse course;
+            course = new OnsiteCourse(
                     rs.getInt("CourseID"),
                     rs.getString("Title"),
                     rs.getInt("Credits"),
                     rs.getInt("DepartmentId"),
-                    rs.getString("DeparmentName"),
                     rs.getString("Location"),
                     rs.getString("Days"),
                     rs.getDate("time")
@@ -294,37 +286,16 @@ public class CourseDAO extends DBConnection {
         }
         return CourseListOnsite;
     }
-    public void addCourseOnline(CourseOnline dto) {
-        String sql = "INSERT INTO CourseOnline (Title, Credits, DepartmentId,DeparmentName,URL) "
-                + "VALUES(?, ?, ?, ?, ?)";
+
+    public void addCourseOnline(OnlineCourse dto) {
+        String sql = "INSERT INTO CourseOnline (CourseID ,URL) "
+                + "VALUES(?, ?)";
 
         try {
+            addCourse(dto);
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, ((CourseOnline) dto).getTitle());
-            stmt.setInt(2, ((CourseOnline) dto).getCredits());
-            stmt.setInt(3, ((CourseOnline) dto).getDepartmentId());
-            stmt.setString(4, ((CourseOnline) dto).getDepartmentName());
-            stmt.setString(5, ((CourseOnline) dto).getURL());
-            stmt.execute();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-     public void addCourseOnsite(CourseOnsite dto) {
-        String sql = "INSERT INTO CourseOnsite (Title, Credits, DepartmentId,DeparmentName,Location,Days,time) "
-                + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-
-        try {
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, ((CourseOnline) dto).getTitle());
-            stmt.setInt(2, ((CourseOnline) dto).getCredits());
-            stmt.setInt(3, ((CourseOnline) dto).getDepartmentId());
-            stmt.setString(4, ((CourseOnline) dto).getDepartmentName());
-            stmt.setString(5, ((CourseOnline) dto).getLocation());
-            stmt.setString(6, ((CourseOnline) dto).getDays());
-            stmt.setDate(7, ((CourseOnline) dto).gettime());
+            stmt.setInt(1, ((OnlineCourse) dto).getCourseID());
+            stmt.setString(2, ((OnlineCourse) dto).getURL());
             stmt.execute();
         }
         catch (SQLException e) {
@@ -333,8 +304,24 @@ public class CourseDAO extends DBConnection {
 
     }
 
-    public ArrayList<CourseOnline> getCourseList() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void addCourseOnsite(OnsiteCourse dto) {
+        String sql = "INSERT INTO CourseOnsite (CourseID,Location,Days,time) "
+                + "VALUES(?, ?, ?, ?)";
+
+        try {
+            addCourse(dto);
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, ((OnsiteCourse) dto).getCourseID());
+            stmt.setString(2, ((OnsiteCourse) dto).getLocation());
+            stmt.setString(3, ((OnsiteCourse) dto).getDays());
+            stmt.setDate(4, ((OnsiteCourse) dto).getTime());
+            
+            stmt.execute();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
-    
+
 }

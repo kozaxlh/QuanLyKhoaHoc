@@ -63,7 +63,7 @@ public class StudentGradeDAO extends DBConnection {
         return studentGradeList;
     }
 
-    public boolean addStudentGrade(StudentGrade grade) throws SQLException {
+    public boolean addStudentGradeInCourse(StudentGrade grade) throws SQLException {
         String sql = "INSERT INTO StudentGrade (CourseID, StudentID, Grade) "
                 + "VALUES (?,?,?)";
 

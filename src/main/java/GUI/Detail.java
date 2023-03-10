@@ -13,8 +13,6 @@ import Entity.StudentGrade;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,27 +27,6 @@ public class Detail {
     StudentGradeBLL gradeBLL = new StudentGradeBLL();
 
     public void showScreen(int id) {
-//        int choice = -1;
-//
-//        do {
-//            System.out.println("============Xem chi tiet=============");
-//            System.out.println("1:Ten hoc vien                              ");
-//            System.out.println("2:Khoa hoc cua hoc vien                     ");
-//            System.out.println("3:So diem hoc vien                           ");
-//            System.out.println("0:Thoát                                      ");
-//            choice = sc.nextInt();
-//            switch (choice) {
-//                case 1 -> {
-//
-//                }
-//
-//                case 2 -> {
-//
-//                }
-//                case 0 -> {
-//                }
-//            }
-//        } while (choice != 0);
         System.out.println(showCourseHeader(id));
         showList(id);
         System.out.println("Nhan 0 de tro ve");
