@@ -1,6 +1,6 @@
 package Entity;
 
-import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
@@ -10,13 +10,16 @@ public class OnsiteCourse extends Course {
 
     protected String Location;
     protected String Days;
-    protected Date time;
+    protected Time time;
 
-    public OnsiteCourse(int CourseID, String Title, int Credits, int DepartmentId, String Location, String Days, Date time) {
+    public OnsiteCourse(int CourseID, String Title, int Credits, int DepartmentId, String Location, String Days, Time time) {
         super(CourseID, Title, Credits, DepartmentId);
         this.Location = Location;
         this.Days = Days;
         this.time = time;
+    }
+
+    public OnsiteCourse() {
     }
 
 
@@ -36,11 +39,15 @@ public class OnsiteCourse extends Course {
         this.Days = Days;
     }
 
-    public Date getTime() {
+    public Time getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Time time) {
         this.time = time;
+    }
+    
+    public void setTime(String time) {
+        this.time = Time.valueOf(time);
     }
 }

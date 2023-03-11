@@ -20,6 +20,9 @@ public class OnlineCourse extends Course {
         this.URL = URL;
     }
 
+    public OnlineCourse() {
+    }
+
     public String getURL() {
         return URL;
     }
