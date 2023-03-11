@@ -184,6 +184,8 @@ public class Project1 {
         }
         catch (SQLException ex) {
             System.out.println("Khong the lay du lieu");
+        }
+        catch (IllegalArgumentException ex) {
             System.out.println(ex);
         }
         System.out.println("Nhan 1 de ve man hinh chinh");
