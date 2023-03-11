@@ -240,12 +240,12 @@ public class CourseDAO extends DBConnection {
 
     public boolean deleteCourseOnline(OnlineCourse dto) {
         boolean flag;
-        String deleteSQL = "delete from CourseOnline "
+        String deleteSQL = "delete from OnlineCourse "
                 + "where CourseID = ?";
         try {
             stmt = conn.prepareStatement(deleteSQL);
             stmt.setInt(1, ((OnlineCourse) dto).getCourseID());
-            flag = stmt.execute() && deleteCourse(dto);
+            flag = !stmt.execute() && deleteCourse(dto);
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -255,12 +255,12 @@ public class CourseDAO extends DBConnection {
 
     public boolean deleteCourseOnsite(OnsiteCourse dto) {
         boolean flag;
-        String deleteSQL = "delete from CourseOnsite "
+        String deleteSQL = "delete from OnsiteCourse "
                 + "where CourseID = ?";
         try {
             stmt = conn.prepareStatement(deleteSQL);
             stmt.setInt(1, ((OnsiteCourse) dto).getCourseID());
-            flag = stmt.execute();
+            flag = !stmt.execute() && deleteCourse(dto);
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
