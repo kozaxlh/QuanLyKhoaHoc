@@ -11,7 +11,7 @@ import Entity.Course;
 import Entity.CourseInstructor;
 import Entity.Person;
 import Entity.StudentGrade;
-import com.mycompany.BLL.CourseInstructorBLL;
+import BLL.CourseInstructorBLL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
