@@ -63,7 +63,7 @@ public class StudentGradeDAO extends DBConnection {
         return studentGradeList;
     }
 
-    public boolean addStudentGradeInCourse(StudentGrade grade) throws SQLException {
+    public boolean addStudentGrade(StudentGrade grade) throws SQLException {
         String sql = "INSERT INTO StudentGrade (CourseID, StudentID, Grade) "
                 + "VALUES (?,?,?)";
 
@@ -71,6 +71,17 @@ public class StudentGradeDAO extends DBConnection {
         stmt.setInt(1, grade.getCourseID());
         stmt.setInt(2, grade.getStudentID());
         stmt.setFloat(3, grade.getGrade());
+
+        return stmt.execute();
+    }
+    public boolean addStudentGrade(int CourseID, int StudentID, float grade) throws SQLException {
+        String sql = "INSERT INTO StudentGrade (CourseID, StudentID, Grade) "
+                + "VALUES (?,?,?)";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, CourseID);
+        stmt.setInt(2, StudentID);
+        stmt.setFloat(3, grade);
 
         return stmt.execute();
     }
@@ -101,6 +112,18 @@ public class StudentGradeDAO extends DBConnection {
 
         return stmt.execute();
     }
+    public boolean updateStudentGrade(int CourseID, int StudentID, float Grade) throws SQLException {
+        String sql = "UPDATE StudentGrade SET "
+                + "Grade = ? "
+                + "WHERE CourseID = ? AND StudentID = ?";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setFloat(1, Grade);
+        stmt.setInt(2, CourseID);
+        stmt.setInt(3, StudentID);
+
+        return stmt.execute();
+    }
     
     public boolean deleteStudentGrade(StudentGrade grade) throws SQLException {
         String sql = "DELETE FROM StudentGrade "
@@ -109,6 +132,15 @@ public class StudentGradeDAO extends DBConnection {
         stmt = conn.prepareStatement(sql);
         stmt.setInt(1, grade.getEnrollmentID());
 
+        return stmt.execute();
+    }
+    public boolean deleteStudentGrade(int courseID, int studentID) throws SQLException {
+        String sql = "DELETE FROM StudentGrade "
+                + "WHERE CourseID = ? AND StudentID = ?";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, courseID);
+        stmt.setInt(2, studentID);
         return stmt.execute();
     }
 }
