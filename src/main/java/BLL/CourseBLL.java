@@ -24,6 +24,12 @@ public class CourseBLL {
     public boolean updateCourse(Course course){
         return courseDAO.updateCourse(course);
     }
+    public boolean updateCourse(OnlineCourse course){
+        return courseDAO.updateCourseOnline(course);
+    }
+    public boolean updateCourse(OnsiteCourse course){
+        return courseDAO.updateCourseOnsite(course);
+    }
     public boolean deleteCourse(Course course){
         return courseDAO.deleteCourse(course);
     }
