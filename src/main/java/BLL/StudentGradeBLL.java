@@ -22,53 +22,61 @@ public class StudentGradeBLL {
     }
 
     public ArrayList<StudentGrade> getStudentInCourse(int id) throws SQLException {
-        return studentGradeDAO.getStudentGradeInCourse(id);
+        return studentGradeDAO.getStudentGrade(id);
     }
 
     public boolean addStudentGrade(StudentGrade grade) throws SQLException {
-        checkStudentGradeValid(grade);
-        return studentGradeDAO.addStudentGrade(grade);
+        return checkStudentGradeValid(grade) && studentGradeDAO.addStudentGrade(grade);
     }
+
     public boolean addStudentGrade(int CourseID, int StudentID, float Grade) throws SQLException {
-        checkStudentGradeValid(Grade);
-        return studentGradeDAO.addStudentGrade(CourseID, StudentID, Grade);
+        return checkStudentGradeValid(Grade) && studentGradeDAO.addStudentGrade(CourseID, StudentID, Grade);
     }
 
     public boolean addStudentGradeInCourse(ArrayList<StudentGrade> gradeList) throws SQLException {
-        for(StudentGrade item : gradeList) {
-            checkStudentGradeValid(item);
+        boolean flag = false;
+        for (StudentGrade item : gradeList) {
+            flag = checkStudentGradeValid(item);
+            if(!flag)
+                return false;
         }
-        return studentGradeDAO.addStudentGradeInCourse(gradeList);
+        return studentGradeDAO.addStudentGrade(gradeList);
     }
 
     public boolean updateStudentGrade(StudentGrade grade) throws SQLException {
-        checkStudentGradeValid(grade);
-        return studentGradeDAO.updateStudentGrade(grade);
+        return checkStudentGradeValid(grade) && studentGradeDAO.updateStudentGrade(grade);
     }
-    public boolean updateStudentGrade(int CourseID, int StudentID, float Grade ) throws SQLException {
-        checkStudentGradeValid(Grade);
-        return studentGradeDAO.updateStudentGrade(CourseID, StudentID, Grade);
+
+    public boolean updateStudentGrade(int CourseID, int StudentID, float Grade) throws SQLException {
+        return checkStudentGradeValid(Grade) && studentGradeDAO.updateStudentGrade(CourseID, StudentID, Grade);
     }
 
     public boolean deleteStudentGrade(StudentGrade grade) throws SQLException {
         return studentGradeDAO.deleteStudentGrade(grade);
     }
+
     public boolean deleteStudentGrade(int courseID, int studentID) throws SQLException {
         return studentGradeDAO.deleteStudentGrade(courseID, studentID);
     }
-    
+
     private boolean checkStudentGradeValid(StudentGrade grade) {
         if (grade.getGrade() > 4.0 || grade.getGrade() < 0) {
-            throw new RuntimeException("Diem khong hop le. Diem phai tu 0 - 4 diem");
+            System.out.println("Diem khong hop le. Diem phai tu 0 - 4 diem");
+            return false;
         }
-        else
+        else {
             return true;
+        }
     }
+
     private boolean checkStudentGradeValid(float grade) {
         if (grade > 4.0 || grade < 0) {
-            throw new RuntimeException("Diem khong hop le. Diem phai tu 0 - 4 diem");
+            System.out.println("Diem khong hop le. Diem phai tu 0 - 4 diem");
+            return false;
+
         }
-        else
+        else {
             return true;
+        }
     }
 }
