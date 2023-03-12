@@ -21,21 +21,43 @@ public class CourseBLL {
     public ArrayList<Course> getCourseList() throws SQLException {
         return courseDAO.getCourseList();
     }
+    
     public boolean updateCourse(Course course){
         return courseDAO.updateCourse(course);
     }
+    
+    public boolean updateCourse(OnlineCourse course){
+        return courseDAO.updateCourseOnline(course);
+    }
+    
+    public boolean updateCourse(OnsiteCourse course){
+        return courseDAO.updateCourseOnsite(course);
+    }
+    
     public boolean deleteCourse(Course course){
         return courseDAO.deleteCourse(course);
     }
+    
+    public boolean deleteCourse(OnlineCourse course){
+        return courseDAO.deleteCourseOnline(course);
+    }
+    
+    public boolean deleteCourse(OnsiteCourse course){
+        return courseDAO.deleteCourseOnsite(course);
+    }
+    
     public void addCourse(OnlineCourse course) {
         courseDAO.addCourseOnline(course);
     }
+    
     public void addCourse(OnsiteCourse course) {
         courseDAO.addCourseOnsite(course);
     }
+    
     public void addCourse(Course course) {
         courseDAO.addCourse(course);
     }
+    
     public ArrayList<Course> getCourse(int id) throws SQLException, IllegalArgumentException {
         ArrayList<Course> list = courseDAO.getCourse(id);
         if (list.isEmpty())

@@ -11,6 +11,8 @@ import Entity.OnsiteCourse;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -85,23 +87,7 @@ public class Project1 {
         } while (choice != 0);
     }
 
-    private static void showList(ArrayList<Course> courseList) {
-        System.out.println("Ma khoa hoc|Ten khoa        | So tin chi  | Ma Khoa  | The loai");
-
-        for (Course item : courseList) {
-            String type = item instanceof OnlineCourse ? "Online" : "Truc tiep";
-            System.out.println(String.format(
-                    "%-11s %-20s %-10s %-10s %s",
-                    item.getCourseID(),
-                    item.getTitle(),
-                    item.getCredits(),
-                    item.getDepartmentId(),
-                    type
-            ));
-        }
-    }
-
-    private static void addCourseScreen() {
+    public static void addCourseScreen() {
 
         int choice;
         String title;
@@ -132,7 +118,7 @@ public class Project1 {
                 course.setDays(sc.nextLine());
                 System.out.print("Nhap thoi gian theo mau hh:mm:ss: ");
                 course.setTime(sc.nextLine());
-                
+
                 courseBLL.addCourse(course);
             }
             else if (choice == 2) {
@@ -143,7 +129,7 @@ public class Project1 {
 
                 System.out.print("Nhap URL: ");
                 course.setURL(sc.nextLine());
-                
+
                 courseBLL.addCourse(course);
             }
 
@@ -153,27 +139,43 @@ public class Project1 {
 
     }
 
-    private static void deleteCourseScreen() {
-        Course course = new Course();
-
+    public static void deleteCourseScreen() {
+        int id;
         int choice;
 
         System.out.println("Nhap ma khoa hoc can xoa: ");
-        course.setCourseID(sc.nextInt());
+        id = sc.nextInt();
         System.out.println("Ban co chac chan se xoa khoa hoc nay ? Neu co thi nhan 1, neu khong thi nhan 0");
         choice = sc.nextInt();
 
+        boolean flag = false;
+        Course course = null;
         if (choice == 1) {
-            if (courseBLL.deleteCourse(course)) {
+            try {
+                course = courseBLL.getCourse(id).get(0);
+            }
+            catch (SQLException | IllegalArgumentException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+            if (course instanceof OnsiteCourse) {
+                flag = courseBLL.deleteCourse((OnsiteCourse) course);
+            }
+            else if (course instanceof OnlineCourse) {
+                flag = courseBLL.deleteCourse((OnlineCourse) course);
+            }
+
+            if (flag) {
                 System.out.println("Xoa thanh cong");
             }
             else {
                 System.out.println("Xoa that bai");
             }
+            sc.nextLine();
         }
     }
 
-    private static void searchCourseScreen() {
+    public static void searchCourseScreen() {
         int courseID, choice;
 
         System.out.println("Nhap ma/ten khoa hoc can tim: ");
@@ -184,9 +186,27 @@ public class Project1 {
         }
         catch (SQLException ex) {
             System.out.println("Khong the lay du lieu");
-            System.out.println(ex);
+        }
+        catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
         }
         System.out.println("Nhan 1 de ve man hinh chinh");
         sc.next();
+    }
+
+    private static void showList(ArrayList<Course> courseList) {
+        System.out.println("Ma khoa hoc|Ten khoa        | So tin chi  | Ma Khoa  | The loai");
+
+        for (Course item : courseList) {
+            String type = item instanceof OnlineCourse ? "Online" : "Truc tiep";
+            System.out.println(String.format(
+                    "%-11s %-20s %-10s %-10s %s",
+                    item.getCourseID(),
+                    item.getTitle(),
+                    item.getCredits(),
+                    item.getDepartmentId(),
+                    type
+            ));
+        }
     }
 }

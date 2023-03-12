@@ -8,7 +8,7 @@ package Entity;
  *
  * @author asus
  */
-public class Course {
+public abstract class Course {
     protected int CourseID;
     protected String Title;
     protected int Credits;
