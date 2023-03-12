@@ -178,7 +178,6 @@ public class PersonGUI {
                 System.out.print("Nhap diem hoc vien: "); 
                 float grade = sc.nextFloat();
                 StudentgradeBLL.addStudentGrade(CourseID, StudentID, grade);
-                System.out.println("Them du lieu thanh cong");
                 System.out.println("Nhap 1 de them hoc vien hoac nhap 0 de thoat ra ");
                 choice = sc.nextInt();
             }
@@ -243,7 +242,6 @@ public class PersonGUI {
             System.out.print("Nhap so diem thay doi: ");
             studentGrade = sc.nextFloat();
             studentGradeInfo.updateStudentGrade(CourseID, studentID, studentGrade);
-            System.out.println("Thay doi thanh cong");
             System.out.println("Bam phim bat ki de tiep tuc");
             new java.util.Scanner(System.in).nextLine();
         }

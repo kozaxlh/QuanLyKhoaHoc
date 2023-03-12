@@ -38,7 +38,7 @@ public class StudentGradeDAO extends DBConnection {
         return studentGradeList;
     }
 
-    public ArrayList<StudentGrade> getStudentGradeInCourse(int courseID) throws SQLException {
+    public ArrayList<StudentGrade> getStudentGrade(int courseID) throws SQLException {
         ArrayList<StudentGrade> studentGradeList = new ArrayList<>();
 
         String sql = "SELECT * FROM StudentGrade WHERE CourseID = ?";
@@ -63,7 +63,7 @@ public class StudentGradeDAO extends DBConnection {
         return studentGradeList;
     }
 
-    public boolean addStudentGradeInCourse(StudentGrade grade) throws SQLException {
+    public boolean addStudentGrade(StudentGrade grade) throws SQLException {
         String sql = "INSERT INTO StudentGrade (CourseID, StudentID, Grade) "
                 + "VALUES (?,?,?)";
 
@@ -74,7 +74,7 @@ public class StudentGradeDAO extends DBConnection {
 
         return stmt.execute();
     }
-    public boolean addStudentGradeInCourse(int CourseID, int StudentID, float grade) throws SQLException {
+    public boolean addStudentGrade(int CourseID, int StudentID, float grade) throws SQLException {
         String sql = "INSERT INTO StudentGrade (CourseID, StudentID, Grade) "
                 + "VALUES (?,?,?)";
 
@@ -86,7 +86,7 @@ public class StudentGradeDAO extends DBConnection {
         return stmt.execute();
     }
 
-    public boolean addStudentGradeInCourse(ArrayList<StudentGrade> gradeList) throws SQLException {
+    public boolean addStudentGrade(ArrayList<StudentGrade> gradeList) throws SQLException {
         String sql = "INSERT INTO StudentGrade (CourseID, StudentID, Grade) VALUES ";
 
         for (StudentGrade item : gradeList) {
